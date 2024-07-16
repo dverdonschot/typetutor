@@ -14,7 +14,7 @@ pub struct GameInput {
     random_character: char,
 }
 
-pub fn random_character_game(input: &BTreeMap<i32, GameInput>) {
+pub fn random_character_game(input: &BTreeMap<i32, GameInput>) -> BTreeMap<i32, GameInput> {
     let mut score: BTreeMap<i32, GameInput> = BTreeMap::new();
     for (character_id, game_status) in input.range(0..) {
         colorized_typed_results_string(&score, character_id);
@@ -38,6 +38,7 @@ pub fn random_character_game(input: &BTreeMap<i32, GameInput>) {
         };
     }
     println!("{:?}", score);
+    score
 }
 
 fn colorized_typed_results_string(input: &BTreeMap<i32, GameInput>, cycle: &i32) {
@@ -66,6 +67,23 @@ pub fn char_training_set_lib_short(number: i32, characters: &[char]) -> BTreeMap
     }
 
     generated_char_training_set_lib
+}
+
+pub fn quote_training_set_lib_short(
+    quote: String,
+) -> BTreeMap<i32, GameInput> {
+
+    let mut generated_quote_training_set_lib: BTreeMap<i32, GameInput> = BTreeMap::new();
+
+    for (iteration, character) in quote.chars().enumerate() {
+        let game_input_mut = GameInput {
+            random_character: character,
+            typed_correct: String::from("unknown"),
+        };
+        generated_quote_training_set_lib.insert(iteration as i32, game_input_mut);
+    }
+
+    generated_quote_training_set_lib
 }
 
 fn getkey() -> io::Result<char> {
